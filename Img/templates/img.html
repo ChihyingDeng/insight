@@ -1,0 +1,40 @@
+
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "bootstrap/fixes.html" as fixes %}
+{% import "bootstrap/utils.html" as util %}
+
+{% block content %}
+{{util.flashed_messages(dismissible=True)}}
+
+<div class="container">
+    {{nav.top.render(id='top-navbar')}}
+
+    <table class="table table-striped table-hover">
+    {{ pagination.links }}
+        <thead>
+		{% for i, j in img%}
+            <tr>
+                <th>{{i.split('/')[1]}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <img src="{{'http://dengc.me:5000/_uploads/photos/'+i.split('/')[1]}}" alt="{{i}}" width="500" height="500">
+                    {% if j==True %}
+                        <img src="{{url_for('static', filename=i.split('/')[1])}}"  width="500" height="500">
+                    {% endif %}
+                </td>
+            </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+</div>
+{{ dataframe|safe }}
+{% endblock %}
+
+{% block head %}
+{{super()}}
+{{fixes.ie8()}}
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "bootstrap/fixes.html" as fixes %}
+{% import "bootstrap/utils.html" as util %}
+
+{% block content %}
+{{util.flashed_messages(dismissible=True)}}
+<style>
+.header {
+  top: 0;
+  left:0;
+  width: 100%;
+}
+.content {
+  padding: 20px;
+  width: 97%;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 10px;
+}
+    
+</style>
+
+<html>
+    <head>
+        <title>RadDx</title>
+        {{ dropzone.load() }}
+        {{ dropzone.style('border: 2px dashed #538CD5; margin: 5%; min-height: 300px;') }}
+    </head>
+    <body>
+    <div  class="header" id="Header">
+    <img src="{{url_for('static', filename='raddx.jpg')}}"  width="1280" height="100">
+    {{nav.top.render(id='top-navbar')}}        
+    </div>
+	<div class="content">
+		{{ dropzone.create(action_view='index') }}
+        {{ wtf.quick_form(form, form_type='inline', button_map={'submit_button': 'primary'}) }}
+	</div>
+    
+    <script>
+    window.onscroll = function() {Fix()};
+
+    var header = document.getElementById("Header");
+    var sticky = header.offsetTop;
+
+    function Fix() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    }
+    </script>
+    </body>
+</html>
+{% endblock %}
+
+{% block head %}
+{{super()}}
+{{fixes.ie8()}}
+{% endblock %}
