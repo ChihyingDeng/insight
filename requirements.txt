@@ -1,0 +1,11 @@
+flask
+gunicorn
+flask-bootstrap
+flask-nav
+flask-debug
+flask-wtf
+matplotlib
+opencv-python
+pytorch
+torchvision
+PIL
